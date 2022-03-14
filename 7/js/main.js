@@ -1,0 +1,3 @@
+import './create-thumbnails.js';
+
+
