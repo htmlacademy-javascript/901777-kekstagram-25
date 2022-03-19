@@ -16,7 +16,7 @@ const countAvatar = getCounter(); //счетчик для аватарок
 
 //Функция генерирующая объект - комментарий к фотографии
 const getComment = function() {
-  let comment = {
+  const comment = {
     'id': countCommentsId(),
     'avatar': `img/avatar-${countAvatar() }.svg`,
     'message': getRandomElem(messageArr),
@@ -27,7 +27,7 @@ const getComment = function() {
 
 //Функция генерирует объект, каждый объект это описание фотографии с комментом.
 const getObjPhoto = function() {
-  let obj = {
+  const obj = {
     'id': countId(),
     'url': `photos/${  countUrl()  }.jpg`,
     'description':getRandomElem(descriptionArr),

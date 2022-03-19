@@ -1,14 +1,14 @@
+/* eslint-disable no-console */
 import './create-thumbnails.js';
 import './full-size-picture.js';
 import {picturesNode} from './full-size-picture.js';
 import {createPhotosArr} from './data-photos.js';
 
 
-
 const getCommentsBigPicture = function (picture,comments) {
-picture.addEventListener ('click', ()=> {
-   console.log(comments);
-});
+  picture.addEventListener ('click', ()=> {
+    console.log(comments);
+  });
 };
 
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import './create-thumbnails.js';
 export {picturesNode};
 // console.log(createPhotosArr);
@@ -5,11 +6,9 @@ export {picturesNode};
 const bigPicture = document.querySelector('.big-picture');
 const picturesNode = document.querySelectorAll('.picture');
 const cancelBigPicture = document.querySelector('#picture-cancel');
-const socialComments = bigPicture.querySelectorAll('.social__comment');
-// const socialComment = socialComments.querySelector('.social__comment');
 
 
-picturesNode.forEach(element => {
+picturesNode.forEach((element) => {
   element.addEventListener('click', (evt) => {
     evt.preventDefault();
     bigPicture.classList.remove('hidden');
@@ -29,6 +28,5 @@ document.addEventListener('keydown', (evt) => {
     bigPicture.classList.add('hidden');
   }
 });
-
 
 
