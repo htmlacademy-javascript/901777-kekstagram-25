@@ -11,7 +11,6 @@ createPhotosArr.forEach((elem) =>{
   pictureElement.querySelector('.picture__likes').textContent = elem.likes;
   pictureElement.querySelector('.picture__comments').textContent = elem.comments.length;
   picturesFragment.appendChild(pictureElement);
-  //elem.comments;
 });
 
 picturesContainer.appendChild(picturesFragment);

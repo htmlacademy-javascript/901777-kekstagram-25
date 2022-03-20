@@ -18,7 +18,7 @@ const countAvatar = getCounter(); //счетчик для аватарок
 const getComment = function() {
   const comment = {
     'id': countCommentsId(),
-    'avatar': `img/avatar-${countAvatar() }.svg`,
+    'avatar': `img/avatar-${getRandomNumber(1,6) }.svg`,
     'message': getRandomElem(messageArr),
     'name': getRandomElem(nameArr)
   };
