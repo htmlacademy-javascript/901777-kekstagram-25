@@ -4,7 +4,6 @@ const pictureTemplate = document.querySelector('#picture').content;
 const picturesContainer = document.querySelector('.pictures');
 const picturesFragment = document.createDocumentFragment(); //создание фрагмента
 
-
 //генерируем пикчи через перебор массива createPhotosArr
 createPhotosArr.forEach((elem) =>{
   const pictureElement = pictureTemplate.cloneNode(true);
@@ -15,3 +14,5 @@ createPhotosArr.forEach((elem) =>{
 });
 
 picturesContainer.appendChild(picturesFragment);
+
+

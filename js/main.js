@@ -1,3 +1,2 @@
-import './create-thumbnails.js';
-
+import './gallery.js';
 
