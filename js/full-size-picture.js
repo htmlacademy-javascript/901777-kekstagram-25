@@ -8,6 +8,7 @@ const cancelBigPicture = document.querySelector('#picture-cancel');
 const socialCommentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 
+
 picturesNode.forEach((element) => {
   element.addEventListener('click', (evt) => {
     evt.preventDefault();
@@ -20,6 +21,7 @@ picturesNode.forEach((element) => {
     document.body.classList.add('modal-open');
   });
 });
+
 
 
 cancelBigPicture.addEventListener('click', ()=> {
