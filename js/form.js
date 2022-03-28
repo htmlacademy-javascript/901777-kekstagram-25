@@ -5,14 +5,24 @@ const uploadCancel = imgUploadOverlay.querySelector('#upload-cancel');
 const hashtagsInput = imgUploadForm.querySelector('.text__hashtags');
 const commentsForm = imgUploadForm.querySelector('.text__description');
 
+// const pristine = new Pristine(imgUploadForm, {
+//   classTo:'img-upload__text',
+//   errorClass: 'img-upload__text--invalid',
+//   successClass:'img-upload__text--valid',
+//   errorTextParent:'img-upload__text',
+//   errorTextTag:'p',
+//   errorTextClass:''
+// });
+
 const pristine = new Pristine(imgUploadForm, {
-  classTo:'img-upload__text',
-  errorClass: 'img-upload__text--invalid',
-  successClass:'img-upload__text--valid',
-  errorTextParent:'img-upload__text',
+  classTo:'form_item',
+  errorClass: 'form_item--invalid',
+  successClass:'form_item--valid',
+  errorTextParent:'form_item',
   errorTextTag:'p',
-  errorTextClass:''
+  errorTextClass:'form_error'
 });
+
 
 //функция валидации хэштегов
 const validateHashtags = function (value) {
@@ -42,10 +52,10 @@ pristine.addValidator(hashtagsInput, validateHashtags, 'Хэштеги запо�
 pristine.addValidator(commentsForm, validateComment, 'до 140 символов в комментарии к фотографии');
 
 imgUploadForm.addEventListener('submit', (evt)=>{
-  const validate = pristine.validate();
-  if(!validate){
+  // pristine.validate();
+  const valid = pristine.validate();
+  if (!valid){
     evt.preventDefault();
-    imgUploadForm.removeEventListener('submit');
   }
 });
 
