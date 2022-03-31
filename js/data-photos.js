@@ -12,7 +12,6 @@ const messageArr = ['Всё отлично!','В целом всё неплох�
 const countId= getCounter(); //счетчик ID
 const countUrl = getCounter(); //счетчик Url для фото
 const countCommentsId= getCounter(); //счетчик ID комментариев
-const countAvatar = getCounter(); //счетчик для аватарок
 
 //Функция генерирующая объект - комментарий к фотографии
 const getComment = function() {
@@ -32,7 +31,7 @@ const getObjPhoto = function() {
     'url': `photos/${  countUrl()  }.jpg`,
     'description':getRandomElem(descriptionArr),
     'likes':getRandomNumber(15,200),
-    'comments': Array.from({length: 2},getComment) //генерируем массив комментариев из двух элементов
+    'comments': Array.from({length: 14},getComment) //генерируем массив комментариев из двух элементов
   };
   return obj;
 };
