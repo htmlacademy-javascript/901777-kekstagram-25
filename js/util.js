@@ -32,3 +32,4 @@ function getCounter() {
     return counter++;
   };
 }
+
