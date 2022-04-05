@@ -4,13 +4,14 @@ export {scaleControlValue,imageUploadPreview};
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
-const imageUploadPreview = document.querySelector('.img-upload__preview');
+const imageUploadPreview = document.querySelector('.img-upload__preview').children[0];
 
 const effectLevelSlider = document.querySelector('.effect-level__slider');
 const effectLevelValue = document.querySelector('.effect-level__value');
 const effectsList = document.querySelector('.effects__list');
 const slider = document.querySelector('.img-upload__effect-level');
 const percent = '%';
+
 //скрываем слайдер эффекта
 slider.classList.add('hidden');
 
@@ -28,7 +29,7 @@ noUiSlider.create(effectLevelSlider, {
 //обработчик изменения полузнка слайдера
 effectLevelSlider.noUiSlider.on('update',()=>{
   effectLevelValue.value = effectLevelSlider.noUiSlider.get();
-  switch (imageUploadPreview.classList[1]) {
+  switch (imageUploadPreview.classList[0]) {
     case 'effects__preview--chrome': imageUploadPreview.style.filter = `grayscale(${effectLevelSlider.noUiSlider.get()})`;
       break;
     case 'effects__preview--sepia': imageUploadPreview.style.filter = `sepia(${effectLevelSlider.noUiSlider.get()})`;
@@ -44,10 +45,10 @@ effectLevelSlider.noUiSlider.on('update',()=>{
 
 //функция которая передается при выборе эффекта
 const addClassPhotoPreview = function (evt) {
-  imageUploadPreview.className = 'img-upload__preview';
+  imageUploadPreview.className = '';
   imageUploadPreview.classList.add(`effects__preview--${evt.target.value}`);
   slider.classList.remove('hidden');
-  switch (imageUploadPreview.classList[1]) {
+  switch (imageUploadPreview.classList[0]) {
     case 'effects__preview--chrome': effectLevelSlider.noUiSlider.updateOptions({
       range: {
         min: 0,
