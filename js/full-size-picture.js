@@ -5,7 +5,6 @@ export {picturesNode,bigPicture};
 const bigPicture = document.querySelector('.big-picture');
 const picturesNode = document.querySelectorAll('.picture');
 const cancelBigPicture = document.querySelector('#picture-cancel');
-const socialCommentCount = document.querySelector('.social__comment-count');
 
 
 picturesNode.forEach((element) => {
