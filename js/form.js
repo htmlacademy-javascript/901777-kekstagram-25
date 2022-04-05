@@ -1,3 +1,6 @@
+import './picture-form.js';
+import { scaleControlValue,imageUploadPreview} from './picture-form.js';
+
 const imgUploadForm = document.querySelector('.img-upload__form');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const uploadFile = document.querySelector('#upload-file');
@@ -5,14 +8,6 @@ const uploadCancel = imgUploadOverlay.querySelector('#upload-cancel');
 const hashtagsInput = imgUploadForm.querySelector('.text__hashtags');
 const commentsForm = imgUploadForm.querySelector('.text__description');
 
-// const pristine = new Pristine(imgUploadForm, {
-//   classTo:'img-upload__text',
-//   errorClass: 'img-upload__text--invalid',
-//   successClass:'img-upload__text--valid',
-//   errorTextParent:'img-upload__text',
-//   errorTextTag:'p',
-//   errorTextClass:''
-// });
 
 const pristine = new Pristine(imgUploadForm, {
   classTo:'form_item',
@@ -74,11 +69,13 @@ hashtagsInput.addEventListener ('keydown', (evt)=>{
   }
 });
 
-//открываем форму при загрузке формы
+//открываем форму при загрузке фото
 uploadFile.addEventListener('change', (evt)=>{
   evt.preventDefault();
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
+  scaleControlValue.value = '100%';
+  imageUploadPreview.style.cssText = 'transform: scale(1)';
 });
 
 //закрываем форму при нажатие на крестик
