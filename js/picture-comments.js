@@ -1,5 +1,6 @@
 import {picturesNode,bigPicture} from './full-size-picture.js';
-import {createPhotosArr} from './data-photos.js';
+// import {createPhotosArr} from './data-photos.js';
+import {createDataPhotos} from './server.js';
 
 const socialComments = document.querySelector('.social__comments');
 const socialComment = document.querySelector('.social__comment');
@@ -37,9 +38,12 @@ const getCommentsBigPicture = function (picture,comments) {
   });
 };
 
+
+
 for (let i=0; i<createPhotosArr.length;i++){
   getCommentsBigPicture(picturesNode[i],createPhotosArr[i].comments);
 }
+
 
 //генерируем функцию для показа 5 следующих комментариев
 const getMoreComments = function (){

@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import {getCounter,getRandomNumber,getRandomElem} from './util.js';
 export {createPhotosArr};
 
