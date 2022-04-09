@@ -1,18 +1,19 @@
-"use strict"
-import {createThumbnails} from './create-thumbnails.js';
-export {createDataPhotos};
+import {createThumbnails} from './gallery.js';
 
-const createDataPhotos = function () {
- return fetch('https://25.javascript.pages.academy/kekstagram/data')
- .then((response) => response.json());
-};
+const PICTURES_DATA = 'https://25.javascript.pages.academy/kekstagram/data';
+const FORM_SUBMIT_URL = 'https://25.javascript.pages.academy/kekstagram';
 
-
-// console.log(createDataPhotos());
-
-fetch('https://25.javascript.pages.academy/kekstagram/data')
-.then((response) => response.json())
-  .then((data) => {
-    console.log(data);
+fetch(PICTURES_DATA)
+  .then((response) => {
+    if (response.ok) {
+      return response.json();
+    }
+    throw new Error(`${response.status} ${response.statusText}`);
+  }).then((data) => {
     createThumbnails(data);
+  }).catch((err) => {
+    // eslint-disable-next-line no-alert
+    alert(err);
   });
+
+export {FORM_SUBMIT_URL};
