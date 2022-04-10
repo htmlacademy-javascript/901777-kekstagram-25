@@ -1,5 +1,8 @@
 import './picture-form.js';
-import { scaleControlValue,imageUploadPreview} from './picture-form.js';
+import './form-message.js';
+import {FORM_SUBMIT_URL} from './server.js';
+import {createSuccessMessage,createErrorMessage,sectionSuccess,sectionError} from './form-message.js';
+import { scaleControlValue,imageUploadPreview,slider} from './picture-form.js';
 
 const imgUploadForm = document.querySelector('.img-upload__form');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -7,8 +10,9 @@ const uploadFile = document.querySelector('#upload-file');
 const uploadCancel = imgUploadOverlay.querySelector('#upload-cancel');
 const hashtagsInput = imgUploadForm.querySelector('.text__hashtags');
 const commentsForm = imgUploadForm.querySelector('.text__description');
+const effectItemOrigin = document.querySelector('#effect-none');
 
-
+//подключаем Pristine для валидации формы
 const pristine = new Pristine(imgUploadForm, {
   classTo:'form_item',
   errorClass: 'form_item--invalid',
@@ -46,14 +50,44 @@ const validateComment = function (value) {
 pristine.addValidator(hashtagsInput, validateHashtags, 'Хэштеги заполнены не правильно');
 pristine.addValidator(commentsForm, validateComment, 'до 140 символов в комментарии к фотографии');
 
+//сбрасываем форму до начальных настроек
+const getDeafultForm = function (){
+  imgUploadOverlay.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  uploadFile.value = '';
+  hashtagsInput.value = '';
+  commentsForm.value = '';
+  scaleControlValue.value = '100%';
+  imageUploadPreview.className = '';
+  imageUploadPreview.style = '';
+  effectItemOrigin.checked = false;
+  pristine.reset();
+};
+
+//отправка формы на сервер
 imgUploadForm.addEventListener('submit', (evt)=>{
-  // pristine.validate();
+  evt.preventDefault();
   const valid = pristine.validate();
-  if (!valid){
-    evt.preventDefault();
+  if (valid){
+    const formData = new FormData(evt.target);
+    fetch(
+      FORM_SUBMIT_URL,
+      {
+        method: 'POST',
+        credentials: 'same-origin',
+        body: formData,
+      },
+    ).then((response) => response.json())
+      .then(() => {
+        createSuccessMessage();
+        getDeafultForm();
+      })
+      .catch(()=>{
+        getDeafultForm();
+        createErrorMessage();
+      });
   }
 });
-
 
 //отменяем закрытие формы, если фокус на комментарии
 commentsForm.addEventListener ('keydown', (evt)=>{
@@ -76,21 +110,19 @@ uploadFile.addEventListener('change', (evt)=>{
   document.body.classList.add('modal-open');
   scaleControlValue.value = '100%';
   imageUploadPreview.style.cssText = 'transform: scale(1)';
+  effectItemOrigin.checked = true;
+  slider.classList.add('hidden');
 });
 
 //закрываем форму при нажатие на крестик
-uploadCancel.addEventListener('click', ()=>{
-  imgUploadOverlay.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  uploadFile.value = '';
-});
+uploadCancel.addEventListener('click', getDeafultForm);
 
 //закрываем форму при нажатии Esc
 document.addEventListener('keydown', (evt)=>{
   if (evt.keyCode === 27){
-    imgUploadOverlay.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-    uploadFile.value = '';
+    getDeafultForm();
+    sectionSuccess.classList.add('hidden');
+    sectionError.classList.add('hidden');
   }
 });
 
