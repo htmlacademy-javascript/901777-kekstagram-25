@@ -1,6 +1,3 @@
-// eslint-disable-next-line no-use-before-define
-export {scaleControlValue,imageUploadPreview,slider};
-
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
@@ -124,3 +121,4 @@ scaleControlBigger.addEventListener ('click',()=>{
   imageUploadPreview.style.transform = `scale(${transformValue})`;
 });
 
+export {scaleControlValue,imageUploadPreview,slider};
