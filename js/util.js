@@ -1,6 +1,3 @@
-/* eslint-disable no-use-before-define */
-export {getRandomNumber, getMaxLength,getRandomElem, getCounter,debounce};
-
 //Функия выводит рандомное число из переданного диапозона
 const getRandomNumber = function (min,max) {
   if ((min>=0 && max>=0) && (min<max)){
@@ -50,3 +47,5 @@ function debounce (callback, timeoutDelay = 500) {
     // пока действие совершается чаще, чем переданная задержка timeoutDelay
   };
 }
+
+export {getRandomNumber, getMaxLength,getRandomElem, getCounter,debounce};

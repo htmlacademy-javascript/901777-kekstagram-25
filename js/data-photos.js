@@ -1,6 +1,4 @@
 import {getCounter,getRandomNumber,getRandomElem} from './util.js';
-export {createPhotosArr};
-
 
 const descriptionArr = ['Это красиво','Моё новое фото', 'Сфотографировал на телефон'];
 
@@ -36,4 +34,6 @@ const getObjPhoto = function() {
 };
 
 //генерируем массив с объектами
-const createPhotosArr = Array.from({length: 25},getObjPhoto);
+// const createPhotosArr = Array.from({length: 25},getObjPhoto);
+
+// export {createPhotosArr};
