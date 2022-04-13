@@ -106,6 +106,8 @@ hashtagsInput.addEventListener ('keydown', (evt)=>{
 //открываем форму при загрузке фото
 uploadFile.addEventListener('change', (evt)=>{
   evt.preventDefault();
+  const fileTarget = evt.target.files[0];
+  imageUploadPreview.src = window.URL.createObjectURL(fileTarget);
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   scaleControlValue.value = '100%';
