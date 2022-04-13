@@ -69,6 +69,7 @@ const getFilterRandomPictures = function () {
     });
 };
 
+
 const getFilterDefaultPictures = function () {
   getActiveFilter(filterDeafault);
   removePicturesNodes();
