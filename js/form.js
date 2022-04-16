@@ -64,11 +64,30 @@ const getDeafultForm = function (){
   pristine.reset();
 };
 
+const hiddenFormCancel = function () {
+  getDeafultForm();
+  // eslint-disable-next-line no-use-before-define
+  document.removeEventListener('keydown',hiddenFormEsc);
+};
+
+const hiddenFormEsc = function (evt) {
+  if (evt.keyCode === 27){
+    getDeafultForm();
+    sectionSuccess.classList.add('hidden');
+    sectionError.classList.add('hidden');
+    // eslint-disable-next-line no-use-before-define
+    uploadCancel.removeEventListener('click', hiddenFormCancel);
+  }
+};
+
+
 //отправка формы на сервер
 imgUploadForm.addEventListener('submit', (evt)=>{
   evt.preventDefault();
   const valid = pristine.validate();
   if (valid){
+    document.removeEventListener('keydown',hiddenFormEsc);
+    uploadCancel.removeEventListener('click', hiddenFormCancel);
     const formData = new FormData(evt.target);
     fetch(
       FORM_SUBMIT_URL,
@@ -114,17 +133,6 @@ uploadFile.addEventListener('change', (evt)=>{
   imageUploadPreview.style.cssText = 'transform: scale(1)';
   effectItemOrigin.checked = true;
   slider.classList.add('hidden');
+  document.addEventListener('keydown',hiddenFormEsc, {once: true});
+  uploadCancel.addEventListener('click', hiddenFormCancel, {once:true});
 });
-
-//закрываем форму при нажатие на крестик
-uploadCancel.addEventListener('click', getDeafultForm);
-
-//закрываем форму при нажатии Esc
-document.addEventListener('keydown', (evt)=>{
-  if (evt.keyCode === 27){
-    getDeafultForm();
-    sectionSuccess.classList.add('hidden');
-    sectionError.classList.add('hidden');
-  }
-});
-
