@@ -23,7 +23,7 @@ const getActiveFilter = function (selectedFilter) {
 };
 
 
-function genrateRandom (min,max) {
+const genrateRandom = function (min,max) {
   const arr =  [];
   return function () {
     let randomNumber = getRandomNumber(min,max);
@@ -33,7 +33,7 @@ function genrateRandom (min,max) {
     arr.push(randomNumber);
     return randomNumber;
   };
-}
+};
 
 const createRandomFilter = function (data){
   removePicturesNodes();

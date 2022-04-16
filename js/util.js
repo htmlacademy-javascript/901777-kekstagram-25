@@ -23,14 +23,14 @@ const getRandomElem = function (arr){
 };
 
 //Вводим функцию счетчики для того чтобы значения не повторялись в нужных значениях объекта
-function getCounter() {
+const getCounter = function () {
   let counter = 1;
   return function() {
     return counter++;
   };
-}
+};
 
-function debounce (callback, timeoutDelay = 500) {
+const debounce = function (callback, timeoutDelay = 500) {
   // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
   // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать
   let timeoutId;
@@ -46,6 +46,6 @@ function debounce (callback, timeoutDelay = 500) {
     // Таким образом цикл «поставить таймаут - удалить таймаут» будет выполняться,
     // пока действие совершается чаще, чем переданная задержка timeoutDelay
   };
-}
+};
 
 export {getRandomNumber, getMaxLength,getRandomElem, getCounter,debounce};
