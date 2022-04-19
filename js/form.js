@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import './picture-form.js';
 import './form-message.js';
 import {FORM_SUBMIT_URL} from './server.js';
@@ -29,7 +30,7 @@ const validateHashtags = function (value) {
     return true;
   }
   const re = /^#[A-Za-zА-Яа-яЕё0-9]{1,19}$/i;
-  const valueHashtags = value.split(' '); // делаем массив из введеных хэштегов
+  const valueHashtags = value.toLowerCase().split(' '); // делаем массив из введеных хэштегов
   const set = new Set(valueHashtags).size; //собираем новый массив с неповторяющимися значениями и узнаем длинну массива, чтобы потом сравнить по длине с valueHashtags и узнать повторяются ли хэштеги.
   for (let i=0; i<valueHashtags.length; i++){
     if (!((re.test(valueHashtags[i])) && (valueHashtags.length <= 5) && (set === valueHashtags.length))){
@@ -62,21 +63,19 @@ const getDeafultForm = function (){
   imageUploadPreview.style = '';
   effectItemOrigin.checked = false;
   pristine.reset();
+  document.removeEventListener('keydown',closeFormEsc);
+  uploadCancel.removeEventListener('click', closeFormCancel);
 };
 
-const hiddenFormCancel = function () {
+const closeFormCancel = function () {
   getDeafultForm();
-  // eslint-disable-next-line no-use-before-define
-  document.removeEventListener('keydown',hiddenFormEsc);
 };
 
-const hiddenFormEsc = function (evt) {
+const closeFormEsc = function (evt) {
   if (evt.keyCode === 27){
     getDeafultForm();
     sectionSuccess.classList.add('hidden');
     sectionError.classList.add('hidden');
-    // eslint-disable-next-line no-use-before-define
-    uploadCancel.removeEventListener('click', hiddenFormCancel);
   }
 };
 
@@ -86,8 +85,8 @@ imgUploadForm.addEventListener('submit', (evt)=>{
   evt.preventDefault();
   const valid = pristine.validate();
   if (valid){
-    document.removeEventListener('keydown',hiddenFormEsc);
-    uploadCancel.removeEventListener('click', hiddenFormCancel);
+    document.removeEventListener('keydown',closeFormEsc);
+    uploadCancel.removeEventListener('click', closeFormCancel);
     const formData = new FormData(evt.target);
     fetch(
       FORM_SUBMIT_URL,
@@ -133,6 +132,6 @@ uploadFile.addEventListener('change', (evt)=>{
   imageUploadPreview.style.cssText = 'transform: scale(1)';
   effectItemOrigin.checked = true;
   slider.classList.add('hidden');
-  document.addEventListener('keydown',hiddenFormEsc, {once: true});
-  uploadCancel.addEventListener('click', hiddenFormCancel, {once:true});
+  document.addEventListener('keydown',closeFormEsc);
+  uploadCancel.addEventListener('click', closeFormCancel);
 });

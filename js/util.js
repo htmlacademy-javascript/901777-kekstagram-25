@@ -7,29 +7,6 @@ const getRandomNumber = function (min,max) {
   }
 };
 
-
-//Функция проверки длины строки
-const getMaxLength = function(string, maxLength){
-  if(string.length <= maxLength){
-    return true;
-  }else{
-    return false;
-  }
-};
-
-//Функция получает рандомный элемент из массива
-const getRandomElem = function (arr){
-  return arr[getRandomNumber(0,arr.length-1)];
-};
-
-//Вводим функцию счетчики для того чтобы значения не повторялись в нужных значениях объекта
-const getCounter = function () {
-  let counter = 1;
-  return function() {
-    return counter++;
-  };
-};
-
 const debounce = function (callback, timeoutDelay = 500) {
   // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
   // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать
@@ -48,4 +25,4 @@ const debounce = function (callback, timeoutDelay = 500) {
   };
 };
 
-export {getRandomNumber, getMaxLength,getRandomElem, getCounter,debounce};
+export {getRandomNumber,debounce};

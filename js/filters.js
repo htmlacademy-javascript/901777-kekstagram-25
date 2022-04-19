@@ -2,6 +2,7 @@ import { getRandomNumber,debounce } from './util.js';
 import { PICTURES_DATA } from './server.js';
 import {createThumbnails} from './gallery.js';
 
+const imgFiltersForm = document.querySelector('.img-filters__form');
 const imgFilter = document.querySelector('.img-filters');
 const filterDeafault = imgFilter.querySelector('#filter-default');
 const filterRandom = imgFilter.querySelector('#filter-random');
@@ -24,13 +25,13 @@ const getActiveFilter = function (selectedFilter) {
 
 
 const genrateRandom = function (min,max) {
-  const arr =  [];
+  const numbers =  [];
   return function () {
     let randomNumber = getRandomNumber(min,max);
-    while (arr.includes(randomNumber)){
+    while (numbers.includes(randomNumber)){
       randomNumber = getRandomNumber(min,max);
     }
-    arr.push(randomNumber);
+    numbers.push(randomNumber);
     return randomNumber;
   };
 };
@@ -38,18 +39,18 @@ const genrateRandom = function (min,max) {
 const createRandomFilter = function (data){
   removePicturesNodes();
   const getGenerateRandomNumber = genrateRandom(0,24);
-  const arrPhotos = [];
+  const photos = [];
   for (let i=0;i<10;i++){
-    arrPhotos.push(data[getGenerateRandomNumber()]);
+    photos.push(data[getGenerateRandomNumber()]);
   }
-  createThumbnails(arrPhotos);
+  createThumbnails(photos);
 };
 
 const createDiscussedFilter = function (data){
   removePicturesNodes();
-  const arr = data.slice();
-  arr.sort((a,b)=>b.comments.length - a.comments.length);
-  createThumbnails(arr);
+  const datas = data.slice();
+  datas.sort((a,b)=>b.comments.length - a.comments.length);
+  createThumbnails(datas);
 };
 
 const getFilterRandomPictures = function () {
@@ -64,8 +65,7 @@ const getFilterRandomPictures = function () {
       createRandomFilter(data);
     })
     .catch((err) => {
-    // eslint-disable-next-line no-alert
-      alert(err);
+      document.body.textContent = err;
     });
 };
 
@@ -83,8 +83,7 @@ const getFilterDefaultPictures = function () {
       createThumbnails(data);
     })
     .catch((err) => {
-    // eslint-disable-next-line no-alert
-      alert(err);
+      document.body.textContent = err;
     });
 };
 
@@ -101,13 +100,21 @@ const getFilterDiscussedPictures = function () {
       createDiscussedFilter(data);
     })
     .catch((err) => {
-    // eslint-disable-next-line no-alert
-      alert(err);
+      document.body.textContent = err;
     });
 };
 
-filterDeafault.addEventListener('click',debounce(getFilterDefaultPictures));
-filterRandom.addEventListener('click',debounce(getFilterRandomPictures));
-filterDiscussed.addEventListener('click',debounce(getFilterDiscussedPictures));
+const getSwitchFilter = function (evt) {
+  for (let i=0; i<imgFiltersForm.children.length; i++){
+    if (evt.target === imgFiltersForm.children[0]){
+      return getFilterDefaultPictures();
+    }else if (evt.target === imgFiltersForm.children[1]){
+      return getFilterRandomPictures();
+    }else if (evt.target === imgFiltersForm.children[2]) {
+      return getFilterDiscussedPictures();
+    }
+  }
+};
+imgFiltersForm.addEventListener('click',debounce((evt)=>{getSwitchFilter(evt);}));
 
 export {imgFilter};

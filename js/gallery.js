@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 const pictureTemplate = document.querySelector('#picture').content;
 const picturesContainer = document.querySelector('.pictures');
 const picturesFragment = document.createDocumentFragment(); //создание фрагмента
@@ -11,36 +12,35 @@ const socialCommentsLoader = document.querySelector('.comments-loader');
 const socialCommentCounter = document.querySelector('.comments-counter');
 const commentsCount = document.querySelector('.comments-count');
 
-const hiddenModal = function () {
+const getHiddenModal = function () {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
   socialCommentsLoader.classList.remove('hidden');
   socialCommentCount.classList.remove('hidden');
+  cancelBigPicture.removeEventListener('click', closeModalCancel);
+  document.removeEventListener('keydown', closeModalEsc);
 };
 
-const hiddenModalEsc = function (evt) {
+const closeModalEsc = function (evt) {
   if (evt.keyCode === 27){
-    hiddenModal();
-    // eslint-disable-next-line no-use-before-define
-    cancelBigPicture.removeEventListener('click', hiddenModalCancel);
+    getHiddenModal();
   }
 };
 
-const hiddenModalCancel = function () {
-  hiddenModal();
-  document.removeEventListener('keydown', hiddenModalEsc);
+const closeModalCancel = function () {
+  getHiddenModal();
 };
 
 //динамический счетчик комментариев
 const getCounterComments = function (){
-  const commentsArr = socialComments.childNodes;
-  const openCommentsArr = [];
-  for(let i=0; i<commentsArr.length; i++){
-    if (commentsArr[i].classList.value === 'social__comment'){
-      openCommentsArr.push(commentsArr[i]);
+  const comments = socialComments.childNodes;
+  const openComments = [];
+  for(let i=0; i<comments.length; i++){
+    if (comments[i].classList.value === 'social__comment'){
+      openComments.push(comments[i]);
     }
   }
-  socialCommentCounter.textContent = openCommentsArr.length;
+  socialCommentCounter.textContent = openComments.length;
   if (socialCommentCounter.textContent === commentsCount.textContent){
     socialCommentsLoader.classList.add('hidden');
     socialCommentCount.classList.add('hidden');
@@ -49,14 +49,14 @@ const getCounterComments = function (){
 
 //функция для показа 5 следующих комментариев
 const commentsClickHandler = function (){
-  const commentsArr = socialComments.childNodes;
-  const hiddenCommentsArr = [];
-  commentsArr.forEach((elem)=>{
+  const comments = socialComments.childNodes;
+  const hiddenComments = [];
+  comments.forEach((elem)=>{
     if (elem.classList.value === 'social__comment hidden'){
-      hiddenCommentsArr.push(elem);
+      hiddenComments.push(elem);
     }
   });
-  hiddenCommentsArr.forEach((elem,index)=>{
+  hiddenComments.forEach((elem,index)=>{
     if (index >= 5){
       return;
     }
@@ -93,8 +93,8 @@ const getCommentsBigPicture = function (picture,comments) {
 
 // генерируем плитку из маленьких фото через перебор данных с сервера
 // и добавляем их открытие по клику
-const createThumbnails = function (arr){
-  arr.forEach((elem) =>{
+const createThumbnails = function (dataPictures){
+  dataPictures.forEach((elem) =>{
     const pictureElement = pictureTemplate.cloneNode(true);
     pictureElement.querySelector('img').src = elem.url;
     pictureElement.querySelector('.picture__likes').textContent = elem.likes;
@@ -106,7 +106,7 @@ const createThumbnails = function (arr){
   const picturesNode = document.querySelectorAll('.picture');
 
   for (let i=0; i<picturesNode.length;i++){
-    getCommentsBigPicture(picturesNode[i],arr[i].comments);
+    getCommentsBigPicture(picturesNode[i],dataPictures[i].comments);
   }
 
   picturesNode.forEach((element) => {
@@ -117,8 +117,8 @@ const createThumbnails = function (arr){
       bigPicture.querySelector('.likes-count').textContent = element.querySelector('.picture__likes').textContent;
       bigPicture.querySelector('.comments-count').textContent = element.querySelector('.picture__comments').textContent;
       document.body.classList.add('modal-open');
-      cancelBigPicture.addEventListener('click', hiddenModalCancel, {once: true});
-      document.addEventListener('keydown', hiddenModalEsc, {once: true});
+      cancelBigPicture.addEventListener('click', closeModalCancel);
+      document.addEventListener('keydown', closeModalEsc);
     });
   });
 };

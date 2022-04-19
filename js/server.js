@@ -14,8 +14,7 @@ fetch(PICTURES_DATA)
     createThumbnails(data);
     imgFilter.classList.remove('img-filters--inactive');
   }).catch((err) => {
-    // eslint-disable-next-line no-alert
-    alert(err);
+    document.body.textContent = err;
   });
 
 export {FORM_SUBMIT_URL,PICTURES_DATA};
